@@ -6,41 +6,46 @@ package za.ac.cput.service;
     Date: 25 May 2025
  */
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import za.ac.cput.domain.User;
 import za.ac.cput.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
 
-    private static IUserService service;
-    private UserRepository repository;
+    private final UserRepository repository;
+
+    @Autowired
+    public UserService(UserRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
-    public User create(User user) {
+    public User createUser(User user) {
         return this.repository.save(user);
     }
 
     @Override
-    public User read(String id) {
-        return this.repository.findById(id).orElse(null);
+    public Optional<User> readUser(String id) {
+        return this.repository.findById(id);
     }
 
     @Override
-    public User update(User user) {
+    public User updateUser(User user) {
         return this.repository.save(user);
     }
 
     @Override
-    public boolean delete(String id) {
+    public void deleteUser(String id) {
         this.repository.deleteById(id);
-        return true;
     }
 
     @Override
-    public List<User> getAll() {
+    public List<User> getAllUsers() {
         return this.repository.findAll();
     }
 }
