@@ -45,5 +45,4 @@ public class SubjectService implements ISubjectService {
     public List<Subject> getAll() {
         return this.repository.findAll();
     }
-
 }
